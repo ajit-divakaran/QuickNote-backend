@@ -4,15 +4,14 @@ const cors = require('cors')
 
 const router = require('./router')
 require('dotenv').config()
-// require('./connection')
-// const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+require('./connection')
 
-// const apikey = process.env.API_KEY
-// parse json data received
+
+
 
 const noteServer = express()
-noteServer.use(express.json())
 noteServer.use(cors())
+noteServer.use(express.json())
 
 
 
