@@ -56,7 +56,7 @@ exports.login = async(req,res) => {
 
             const { password, email, ...userWithoutSensitiveInfo } = existingUser.toObject()
             console.log(userWithoutSensitiveInfo)
-            const token = jwt.sign({userId:existingUser._id},'secretkey')
+            const token = jwt.sign({userId:existingUser._id},process.env.JWT_SECRET_KEY)
             res.status(200).json({userWithoutSensitiveInfo,token})
         }
         else{

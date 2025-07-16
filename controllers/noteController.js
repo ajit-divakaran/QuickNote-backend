@@ -2,7 +2,8 @@ const notes = require('../models/noteModel')
 
 exports.addnote = async(req,res)=>{
     // createdAt,updatedAt,
-    const {title,content,tags,userId} = req.body
+    const userId = req.payload
+    const {title,content,tags} = req.body
     const today = new Date();
     // const formattedDate = today.toLocaleDateString('en-GB'); // British format (DD/MM/YYYY)
     // console.log(formattedDate);
@@ -20,6 +21,7 @@ exports.editnote = async(req,res)=>{
     const {noteid,title,content,tags} = req.body
     try {
         let existingNote = await notes.findById(noteid)
+        console.log(existingNote)
         if(existingNote){
             existingNote = await notes.findByIdAndUpdate(noteid,{title,content,tags,updatedAt:new Date()})
             res.status(200).json(existingNote)
@@ -46,6 +48,17 @@ exports.deletenote = async(req,res) =>{
             res.status(406).json("Note doesn't exist")
         }
     } catch (error) {
-        res.status(400).json("server error")
+        res.status(401).json("server error")
     } 
+}
+
+exports.getnote = async(req,res) =>{
+    const userId = req.payload
+    try {
+        const existingNote = await notes.find({userId})
+        console.log(existingNote)
+        res.status(200).json(existingNote)
+    } catch (error) {
+        res.status(401).json(error)
+    }
 }

@@ -9,5 +9,6 @@ router.post('/login',userController.login)
 router.post('/add-note',jwtMiddleware,noteController.addnote)
 router.post('/edit-note',jwtMiddleware,noteController.editnote)
 router.delete('/delete-note/:noteid',jwtMiddleware,noteController.deletenote)
+router.get('/get-notes',jwtMiddleware,noteController.getnote)
 
 module.exports = router
